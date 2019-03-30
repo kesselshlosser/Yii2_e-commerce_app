@@ -29,8 +29,6 @@ phpunit.phar
 tests/_output/*
 tests/_support/_generated
 
-# db configuration
-config/db.php
 
 # db migrations
 migrations/*
