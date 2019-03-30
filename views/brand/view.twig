@@ -1,0 +1,110 @@
+{{ use('yii/helpers/Html') }}
+{{ use('yii/helpers/Url') }}
+{{ use('yii/widgets/LinkPager') }}
+{{ use('app/components/widgets/BrandProductsWidget') }}
+{{ use('app/components/widgets/MenuWidget') }}
+{{ use('kartik/slider/Slider') }}
+
+<section id="advertisement">
+    <div class="container">
+        <img src="/images/shop/1.jpg" alt="" />
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+
+                    <ul class="catalog category-products">
+                        {{ menu_widget_widget() }}
+                    </ul>
+
+                    {{ brand_products_widget_widget() }}
+                    <div class="price-range">
+                        <!--price-range-->
+                        <h2>Price Range</h2>
+                        <div class="well">
+                            {{ html_begin_form }}
+                            {# 'value': '250,600' FIX IT#}
+                            {{ slider_widget({
+                                'name': 'price_range',
+                                'value': '5, 9',
+                                'sliderColor': Slider_TYPE_WARNING,
+                                'pluginOptions': [{
+                                    'min': '0',
+                                    'max': '600',
+                                    'step': 10,
+                                    'range': true
+                                }]
+                            })
+                            }}
+                            <p>
+                                <b>{{ 0 }} $</b> <b class="pull-right">{{ 600 }} $</b>
+                            </p>
+                            {{ html_end_form }}
+                            <a href="/" class="btn btn-warning" id="price-range-accept">Accept</a>
+                            <h3>{{ asd }}</h3>
+
+                        </div>
+                    </div><!--/price-range-->
+
+                    <div class="shipping text-center"><!--shipping-->
+                        <img src="/images/home/shipping.jpg" alt="" />
+                    </div><!--/shipping-->
+
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items"><!--features_items-->
+                    <h2 class="title text-center">{{ category['name'] }}</h2>
+                    {% if products is not empty %}
+                        {% set counter = 0 %}
+                        {% for product in products %}
+                            <div class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="{{ base_path }}/images/products/{{ product['img'] }}" alt="{{ product['name'] }}"/>
+
+                                            <h2>{{ product['price'] }} $</h2>
+                                            <p><a href="/product/{{ product['id']}}">{{ product['name']}}</a></p>
+                                            <a href="/cart/add/{{ product['id'] }}" class="btn btn-default add-to-cart" data-id="{{ product['id'] }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                        {% if( product['new']) %}
+                                            <img src="{{ base_path }}/images/home/new.png" alt="New" class="new"/>
+                                        {% endif %}
+
+                                        {% if( product['sale']) %}
+                                            <img src="{{ base_path }}/images/home/sale.png" alt="Sale" class="new"/>
+                                        {% endif %}
+                                    </div>
+                                    <div class="choose">
+                                            <ul class="nav nav-pills nav-justified">
+                                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                            </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {% set counter = counter + 1 %}
+                            {% if counter % 3 == 0 %}
+                                <div class="clearfix"></div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="clearfix"></div>
+                        {{ link_pager_widget({
+                            'pagination': pages
+                        }) }}
+                    {% else %}
+                    <h2>Здесь товаров пока нет...</h2>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                </div><!--features_items-->
+            </div>
+        </div>
+    </div>
+</section>

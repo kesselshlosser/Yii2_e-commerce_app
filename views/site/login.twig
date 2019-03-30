@@ -1,0 +1,32 @@
+{# @var $this yii\web\View #}
+{# @var $form yii\bootstrap\ActiveForm #}
+{# @var $model app\models\LoginForm#}
+{{ use('yii/helpers/Html') }}
+{{ use('yii/bootstrap/ActiveForm') }}
+{{ use('yii/captcha/Captcha') }}
+
+{{ set(this,'title','Login') }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }} {# $this->params['breadcrumbs'][] = $this->title; #}
+
+<div class="site-login container">
+    {% set form = active_form_begin({
+        'id': 'login-form',
+        'layout': 'horizontal',
+        'fieldConfig': {
+            'template': '{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>',
+            'labelOptions': {'class': 'col-lg-1 control-label'}
+        }
+    }) %}
+    {{ form.field(model, 'username').textInput({'autofocus': true}) | raw }}
+    {{ form.field(model, 'password').passwordInput() | raw }}
+    {{ form.field(model, 'verifyCode').widget('\\yii\\captcha\\Captcha', {'template': '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>'})| raw }}
+    {{ form.field(model, 'rememberMe').checkbox({
+        'template': '<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>'
+    }) | raw }}
+    <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
+            {{ html.submitButton('Login', {'class': 'btn btn-primary', 'name': 'login-button'}) | raw }}
+        </div>
+    </div>
+    {{ active_form_end() }}
+</div>

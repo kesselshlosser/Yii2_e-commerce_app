@@ -1,0 +1,14 @@
+{# @var $this yii\web\View #}
+{# @var $name string #}
+{# @var $message string #}
+{# @var $exception Exception #}
+{{ use('yii/helpers/Html') }}
+
+{{ set(this,'title', name) }}
+
+<div class="site-error container">
+    <h1>{{ html.encode(this.title) }}</h1>
+    <div class="alert alert-danger">
+        {{ nl2br(html.encode(message)) }}
+    </div>
+</div>

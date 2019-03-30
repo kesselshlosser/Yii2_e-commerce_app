@@ -1,0 +1,56 @@
+{# @var $this yii\web\View #}
+{# @var $model app\modules\admin\models\Product #}
+{{ use('yii/helpers/Html') }}
+{{ use('yii/widgets/DetailView') }}
+
+{{ set(this,'title', model.name) }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : {'label': 'Products', 'url': 'index'} } }) }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
+
+<div class="product-view">
+    <h1>{{ html.encode(this.title) }}</h1>
+
+    <p>
+        <a href="{{ url('/admin/product') }}" class="btn btn-info">Products</a>
+        <a href="{{ path('update', {'id': model.id}) }}" class="btn btn-primary">Update</a>
+        <a href="{{ path('delete', {'id': model.id}) }}" class="btn btn-danger" data-confirm="Are you sure you want to delete this item?" data-method="post">Delete</a>
+    </p>
+
+    {% set img = model.getImage() %}
+
+    {{ detail_view_widget({
+        'model': model,
+        'attributes': [
+            'id',
+            {
+                'attribute': 'category_id',
+                'value': productCategory
+            },
+            'name',
+            'content:html',
+            'price',
+            'keywords',
+            'description',
+            {
+                'attribute': 'image',
+                'value': productImg,
+                'format': 'html'
+            },
+            {
+                'attribute': 'hit',
+                'value': productIsHit,
+                'format': 'html'
+            },
+            {
+                'attribute': 'new',
+                'value': productIsNew,
+                'format': 'html'
+            },
+            {
+                'attribute': 'sale',
+                'value': productIsSale,
+                'format': 'html'
+            },
+        ]
+    }) }}
+</div>

@@ -1,0 +1,26 @@
+{# @var $this yii\web\View #}
+{# @var $model app\modules\admin\models\Brand #}
+{# @var $form yii\widgets\ActiveForm #}
+{{ use('yii/helpers/Html') }}
+{{ use('yii/widgets/ActiveForm') }}
+{{ use('app/components/MenuWidget') }}
+
+<div class="category-form">
+    {% set form = active_form_begin() %}
+    <div class="form-group field-category-parent_id has-success">
+        <label class="control-label" for="category-parent_id">Parent category</label>
+        <select id="category-parent_id" class="form-control" name="Category[parent_id]" aria-invalid="false">
+            <option value="0">Single category</option>
+            {% for category in categories %}
+                <option value="{{ category['id'] }}">{{ category['name'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {{ form.field(model, 'name').textInput({'maxlength': true}) | raw }}
+    {{ form.field(model, 'keywords').textInput({'maxlength': true}) | raw }}
+    {{ form.field(model, 'description').textInput({'maxlength': true}) | raw }}
+    <div class="form-group">
+        {{ html.submitButton(model.isNewRecord ? 'Create': 'Update', {'class': model.isNewRecord ? 'btn btn-success': 'btn btn-primary'}) | raw }}
+    </div>
+    {{ active_form_end() }}
+</div>

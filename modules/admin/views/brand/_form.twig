@@ -1,0 +1,18 @@
+{# @var $this yii\web\View #}
+{# @var $model app\modules\admin\models\Brand #}
+{# @var $form yii\widgets\ActiveForm #}
+{{ use('yii/helpers/Html') }}
+{{ use('yii/widgets/ActiveForm') }}
+
+<div class="brand-form">
+    {% set form = active_form_begin() %}
+        {{ form.field(model, 'id').textInput() | raw }}
+        {{ form.field(model, 'product_id').textInput() | raw }}
+        {{ form.field(model, 'name').textInput({'maxlength': true}) | raw }}
+        {{ form.field(model, 'keywords').textInput({'maxlength': true}) | raw }}
+        {{ form.field(model, 'description').textInput({'maxlength': true}) | raw }}
+        <div class="form-group">
+            {{ html.submitButton(model.isNewRecord ? 'Create': 'Update', {'class': model.isNewRecord ? 'btn btn-success': 'btn btn-primary'}) | raw }}
+        </div>
+    {{ active_form_end() }}
+</div>

@@ -1,0 +1,13 @@
+{# @var $this yii\web\View #}
+{# @var $model app\modules\admin\models\Product #}
+{{ use('yii/helpers/Html') }}
+
+{{ set(this,'title', "Update product "~model.name ) }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : {'label': 'Products', 'url': 'index'} } }) }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : {'label': model.name, 'url': [ 'view', {'id': model.id} ]} } }) }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : 'Update' } }) }}
+
+<div class="product-update">
+    <h1>{{ html.encode(this.title) }}</h1>
+    {% include '_form.twig' %}
+</div>

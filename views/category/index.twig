@@ -1,0 +1,233 @@
+{{ use('app/components/widgets/BrandProductsWidget') }}
+{{ use('app/components/widgets/MenuWidget') }}
+{{ use('yii/helpers/Html') }}
+{{ use('yii/helpers/Url') }}
+{{ use('kartik/slider/Slider') }}
+{{ use('yii/widgets/Pjax') }}
+
+<section id="slider"><!--slider-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free E-Commerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png"  class="pricing" alt="" />
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>100% Responsive Design</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png"  class="pricing" alt="" />
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-sm-6">
+                                <h1><span>E</span>-SHOPPER</h1>
+                                <h2>Free Ecommerce Template</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                <button type="button" class="btn btn-default get">Get it now</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                <img src="images/home/pricing.png" class="pricing" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!--/slider-->
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+                    <ul class="catalog category-products">
+                        {{ menu_widget_widget() }}
+                    </ul>
+                    {{ brand_products_widget_widget() }}
+                    <div class="price-range">
+                        <!--price-range-->
+                        <h2>Price Range</h2>
+                        <div class="well">
+                            {{ html_begin_form }}
+                            {# 'value': '250,600' FIX IT#}
+                            {{ slider_widget({
+                                    'name': 'price_range',
+                                    'value': '5, 9',
+                                    'sliderColor': Slider_TYPE_WARNING,
+                                    'pluginOptions': [{
+                                    'min': productMinValue,
+                                    'max': productMaxValue,
+                                    'step': 1,
+                                    'range': true
+                                    }]
+                                })| raw
+                            }}
+                            <p>
+                                <b>{{ productMinValue }} $</b> <b class="pull-right">{{ productMaxValue }} $</b>
+                            </p>
+                            {{ html_end_form }}
+                            <a href="/" class="btn btn-warning" id="price-range-accept">Accept</a>
+                            <h3>{{ asd }}</h3>
+
+                        </div>
+                    </div><!--/price-range-->
+
+                    <div class="shipping text-center"><!--shipping-->
+                        <img src="images/home/shipping.jpg" alt="" />
+                    </div><!--/shipping-->
+
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                {% if hits is not empty %}
+                <div class="features_items" id="features_items"><!--features_items-->
+                    <h2 class="title text-center">Hit Items</h2>
+                    {% for hit in hits %}
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <img src="{{ base_path }}/images/products/{{ hit['img'] }}" alt="{{ hit['name'] }}"/>
+                                    <h2>{{ hit['price'] }} $</h2>
+                                    <p><a href="/product/{{ hit['id']}}">{{ hit['name']}}</a></p>
+                                       <a href="/cart/add/{{ hit['id'] }}" class="btn btn-default add-to-cart" data-id="{{ hit['id'] }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                </div>
+                                {% if( hit['new']) %}
+                                    <img src="{{ base_path }}/images/home/new.png" alt="New" class="new"/>
+                                {% endif %}
+
+                                {% if( hit['sale']) %}
+                                    <img src="{{ base_path }}/images/home/sale.png" alt="Sale" class="new"/>
+                                {% endif %}
+
+                            </div>
+                            <div class="choose">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div><!--features_items-->
+                {% endif %}
+
+                <div class="recommended_items"><!--recommended_items-->
+                    <h2 class="title text-center">Sale items</h2>
+                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner">
+                            {% set counter = 1 %}
+                            {% set count = sales|length %}
+                            {% set item_class = ' active' %}
+
+                            {% for sale in sales %}
+                            <div class="item{{ item_class }}">
+                                {% if counter % 3 == 0 %}
+                                    {# убираем 'active' для следующих #}
+                                    {% set item_class = '' %}
+                                {% endif %}
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                {#<img src="/web/images/home/sale.png" alt="Sale" class="newarrival"/>#}
+                                                <img src="/web/images/home/recommend1.jpg" alt="" />
+                                                {{ counter }}
+                                                <p><a href="/product/{{ sale['id'] }}">{{ sale['name'] }}</a></p>
+                                                <a href="/cart/add/{{ sale['id'] }}" data-id="{{ sale['id'] }}" class="btn btn-fefault add-to-cart cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%  set counter = counter + 1 %}
+                            {% endfor %}
+                        </div>
+
+                        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div><!--/recommended_items-->
+
+                <div class="category-tab"><!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            {% set counter = 0 %}
+                            {% for type in types %}
+                                {% if counter == 0 %}
+                                    <li class="active"><a href="#{{ type }}" data-toggle="tab" onclick="clicked()">{{ type }}</a></li>
+                                {% else %}
+                                    <li><a href="#{{ type }}" data-toggle="tab" onclick="clicked()">{{ type }}</a></li>
+                                {% endif %}
+                                {%  set counter = counter + counter %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        {% set counter = 1 %}
+                        {% for product in typed %}
+                            {% for type in types %}
+                                {% if product['keywords'] == type %}
+                                    <div class="tab-pane fade in" id="{{ type }}" >
+                                        <div class="col-sm-3">
+                                            <div class="product-image-wrapper">
+                                                <div class="single-products">
+                                                    <div class="productinfo text-center">
+                                                        <img src="images/home/gallery1.jpg" alt="" />
+                                                        <h2>{{ product['price'] }} $</h2>
+                                                        <p><a href="/product/{{ product['id'] }}">{{ product['name'] }}</a></p>
+                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div>
+                                {% endif %}
+                            {% endfor %}
+                            {%  set counter = counter + 1 %}
+                        {% endfor %}
+                    </div>
+                </div><!--/category-tab-->
+            </div>
+        </div>
+    </div>
+</section>

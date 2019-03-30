@@ -1,0 +1,12 @@
+{# @var $this yii\web\View #}
+{# @var $model app\modules\admin\models\Brand #}
+{{ use('yii/helpers/Html') }}
+
+{{ set(this,'title', 'Create brand') }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : {'label': 'Brands', 'url': 'index'} } }) }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
+
+<div class="brand-create">
+    <h1>{{ html.encode(this.title) }}</h1>
+    {% include '_form.twig' %}
+</div>

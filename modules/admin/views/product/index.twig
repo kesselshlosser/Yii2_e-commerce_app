@@ -1,0 +1,43 @@
+{# @var $this yii\web\View #}
+{# @var $dataProvider yii\data\ActiveDataProvider #}
+{{ use('yii/helpers/Html') }}
+{{ use('yii/grid/GridView') }}
+
+{{ set(this,'title', 'Products') }}
+{{ set(this, 'params', { 'breadcrumbs' : { '' : this.title } }) }}
+
+
+<div class="product-index">
+    <h1>{{ html.encode(this.title) }}</h1>
+    <p><a href="{{ path('/admin/product/create') }}" class="btn btn-success">Create Product</a></p>
+
+    {{ grid_view_widget({
+        'dataProvider': dataProvider,
+        'columns': [
+            {'class': '\\yii\\grid\\SerialColumn'},
+            'id',
+            {
+                'attribute': 'category_id',
+                'value': parentCategory,
+            },
+            'name',
+            'price',
+            {
+                'attribute': 'hit',
+                'value': productIsHit,
+                'format': 'html'
+            },
+            {
+                'attribute': 'new',
+                'value': productIsNew,
+                'format': 'html'
+            },
+            {
+                'attribute': 'sale',
+                'value': productIsSale,
+                'format': 'html'
+            },
+            {'class': '\\yii\\grid\\ActionColumn'}
+        ]
+    }) }}
+</div>

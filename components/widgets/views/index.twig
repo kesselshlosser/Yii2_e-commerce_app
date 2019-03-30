@@ -1,0 +1,10 @@
+<div class="brands_products"><!--brands_products-->
+    <h2>Brands</h2>
+    <div class="brands-name">
+        <ul class="nav nav-pills nav-stacked">
+            {% for item in items%}
+                <li><a href="/brand/{{ item.id }}"> <span class="pull-right">({{ item.getProductsCount() }})</span>{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div><!--/brands_products-->

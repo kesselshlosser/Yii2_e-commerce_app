@@ -1,0 +1,62 @@
+{{ use('yii/helpers/Html') }}
+{{ use('yii/helpers/Url') }}
+{{ use('yii/widgets/ActiveForm') }}
+
+<div class="container">
+    {% if app.session.hasFlash('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ app.session.getFlash('success') }}
+        </div>
+    {% endif %}
+
+    {% if app.session.hasFlash('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ app.session.getFlash('error') }}
+        </div>
+    {% endif %}
+
+    {% if session['cart'] is not empty %}
+        <div class="table-responsive">
+        <table class="table table-hover table-stripped">
+            <thead>
+            <tr>
+                <th>Фото</th>
+                <th>Наименование</th>
+                <th>Кол-во</th>
+                <th>Сумма</th>
+                <th><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for id, item in session['cart'] %}
+                <tr>
+                    <td><img src="{{ item['img'] }}" alt="{{ item['name'] }}"  height="50"></td>
+                    <td><a href="/product/{{ item['id'] }}">{{ item['name'] }}</a></td>
+                    <td>{{ item['quantity'] }}</td>
+                    <td>{{ item['quantity'] * item['price'] }}</td>
+                    <td><span data-id="{{ id }}" class="glyphicon glyphicon-remove text-danger del-item" aria-hidden="true" ></span></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="5"><b>Итого: </b></td>
+                <td> {{ session['total']['quantity'] }}</td>
+            </tr>
+            <tr>
+                <td colspan="5"><b>На сумму: </b></td>
+                <td> {{ session['total']['sum'] }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+        {% set form = active_form_begin() %}
+            {{ form.field(order, 'name') | raw }}
+            {{ form.field(order, 'email') | raw }}
+            {{ form.field(order, 'phone').widget('yii\\widgets\\MaskedInput' , {'mask': '(999) 99-99-999'}) | raw }}
+            {{ form.field(order, 'address') | raw }}
+            {{ html.submitButton('Make order', {'class': 'btn btn-success'}) | raw }}
+        {{ active_form_end() }}
+    {% else %}
+    <h3>Корзина пуста</h3>
+    {% endif %}
+</div>
